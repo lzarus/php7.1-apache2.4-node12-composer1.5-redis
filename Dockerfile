@@ -68,6 +68,7 @@ RUN apt-get update \
       bash-completion \
       libldap2-dev \
       redis-server \
+      dos2unix \
       libssl-dev
 	
 
