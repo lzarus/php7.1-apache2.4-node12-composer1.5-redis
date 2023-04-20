@@ -167,8 +167,7 @@ RUN ( \
   echo "opcache.enable_cli=1"; \
   ) > /usr/local/etc/php/conf.d/opcache-recommended.ini
 
-RUN a2enmod rewrite expires && service apache2 restart
-
+RUN a2enmod rewrite expires headers && service apache2 restart
 RUN service redis-server start
 # Our apache volume
 WORKDIR /var/www/html
@@ -207,7 +206,8 @@ RUN mv /var/www/bashrc /var/www/.bashrc
 RUN chown www-data:www-data /var/www/.bashrc
 RUN echo "source .bashrc" >> /var/www/.profile ;\
     chown www-data:www-data /var/www/.profile
-
+#Add colorvim
+RUN echo "syntax on\ncolorscheme desert"  > /var/www/.vimrc
 # Add root .bashrc config
 # When you "docker exec -it" into the container, you will be switched as web user and placed in /var/www/html
 RUN echo "exec su - web" > /root/.bashrc
