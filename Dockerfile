@@ -193,7 +193,22 @@ RUN rm -rf /var/www/html && \
   mkdir -p /var/lock/apache2 /var/run/apache2 /var/log/apache2 /var/www/html && \
   chown -R web:www-data /var/lock/apache2 /var/run/apache2 /var/log/apache2 /var/www/html && \
   chmod 775 -R /var/www/html
-
+  
+RUN OWNER=$(stat -c '%u' /var/www/html) \
+    && GROUP=$(stat -c '%g' /var/www/html) \
+    && USERNAME=www-data \
+    && [ -e "/etc/debian_version" ] || USERNAME=apache \
+    && if [ "$OWNER" != "0" ]; then \
+        usermod -o -u $OWNER $USERNAME \
+        && usermod -s /bin/bash $USERNAME \
+        && groupmod -o -g $GROUP $USERNAME \
+        && usermod -d /var/www/html $USERNAME \
+        && chown -R $USERNAME:$USERNAME /var/www/html \
+        ; fi \
+    && echo The apache user and group has been set to the following: \
+    && id $USERNAME \
+# Définition d'une règle ACL pour le répertoire /var/www/html
+    && sudo setfacl -R -d -m u:www-data:rwX,g:"$GROUP":rwx,o::r-x /var/www/html 
 
 # create directory for ssh keys
 RUN mkdir /var/www/.ssh/
