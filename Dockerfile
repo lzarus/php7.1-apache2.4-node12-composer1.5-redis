@@ -17,6 +17,7 @@ RUN apt-get update \
       libpq-dev \
       libmcrypt-dev \
       libldb-dev \
+      lftp \
       libicu-dev \
       libgmp-dev \
       libmagickwand-dev \
@@ -62,7 +63,7 @@ RUN apt-get update \
 # Install memcached for PHP 7
 RUN cd /tmp && git clone https://github.com/php-memcached-dev/php-memcached.git \
       && cd /tmp/php-memcached && sudo git checkout php7 && phpize && ./configure --disable-memcached-sasl && make -j$(nproc) && make install
-
+RUN docker-php-ext-configure gd --with-jpeg-dir=/usr/include/
 RUN docker-php-ext-install \
       gd \
       bz2 \
