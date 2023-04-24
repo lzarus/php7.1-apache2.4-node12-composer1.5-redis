@@ -66,7 +66,7 @@ RUN apt-get update \
 # Install memcached for PHP 7
 RUN cd /tmp && git clone https://github.com/php-memcached-dev/php-memcached.git \
       && cd /tmp/php-memcached && sudo git checkout php7 && phpize && ./configure --disable-memcached-sasl && make -j$(nproc) && make install
-RUN docker-php-ext-configure gd --with-jpeg-dir=/usr/include/ --with-png-dir=/usr/include/ --with-freetype-dir=/usr/include/
+RUN docker-php-ext-configure gd --with-jpeg=/usr/include/ --with-webp=/usr/include/ --with-png=/usr/include/ --with-zlib=/usr/include/ --with-xpm=/usr/include/ --with-freetype=/usr/include/
 RUN docker-php-ext-install \
       gd \
       bz2 \
