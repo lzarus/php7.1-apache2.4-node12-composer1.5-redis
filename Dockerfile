@@ -12,7 +12,7 @@ RUN apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com AA8E81B4331F7
 
 RUN apt-get update \
       && apt-get install --force-yes -y --no-install-recommends \
-      lsb-release ca-certificates apt-transport-https software-properties-common \
+      lsb-release ca-certificates apt-transport-https software-properties-common build-essential \
       libwebp-dev \
       libxpm-dev \
       libfreetype6-dev \
@@ -45,6 +45,8 @@ RUN apt-get update \
       iputils-ping \
       pdftk \
       curl \
+      libcurl4 \
+      libcurl4-openssl-dev \
       net-tools \
       telnet \
       mysql-client \
@@ -67,7 +69,7 @@ RUN apt-get update \
 RUN cd /tmp && git clone https://github.com/php-memcached-dev/php-memcached.git \
       && cd /tmp/php-memcached && sudo git checkout php7 && phpize && ./configure --disable-memcached-sasl && make -j$(nproc) && make install
 RUN docker-php-ext-configure gd --enable-gd --with-freetype --with-jpeg --with-webp
-RUN docker-php-ext-install \
+RUN docker-php-ext-install -j "$(nproc)" \
       gd \
       bz2 \
       calendar \
