@@ -17,6 +17,8 @@ RUN apt-get update \
       libxpm-dev \
       libfreetype6-dev \
       libjpeg-dev \
+      libpng-dev \
+      libjpeg62-turbo-dev \
       libpq-dev \
       libmcrypt-dev \
       libldb-dev \
@@ -50,8 +52,6 @@ RUN apt-get update \
       sudo \
       memcached \
       libmemcached-tools \
-      libpng-dev \
-      libjpeg62-turbo-dev \
       libxslt1-dev \
       wget \
       linux-libc-dev \
@@ -66,7 +66,7 @@ RUN apt-get update \
 # Install memcached for PHP 7
 RUN cd /tmp && git clone https://github.com/php-memcached-dev/php-memcached.git \
       && cd /tmp/php-memcached && sudo git checkout php7 && phpize && ./configure --disable-memcached-sasl && make -j$(nproc) && make install
-RUN docker-php-ext-configure gd --enable-gd --with-freetype --with-jpeg --with-webp --with-png
+RUN docker-php-ext-configure gd --enable-gd --with-freetype --with-jpeg --with-webp
 RUN docker-php-ext-install \
       gd \
       bz2 \
@@ -120,6 +120,7 @@ RUN curl -s https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add -
 
 #composer
 RUN  curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --version=1.5.0 --filename=composer
+
 #Apache
 # Our apache volume
 WORKDIR /var/www/html
@@ -172,6 +173,8 @@ RUN mv /var/www/bashrc /var/www/.bashrc \
       # Add root .bashrc config
       # When you "docker exec -it" into the container, you will be switched as web user and placed in /var/www/html
       && echo "exec su - web" > /root/.bashrc
+#clean
+RUN apt-get clean && rm -rf /var/cache/apt/lists
 
 # Expose 80 for apache, 9000 for xdebug
 EXPOSE 80
