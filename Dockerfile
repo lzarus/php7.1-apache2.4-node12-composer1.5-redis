@@ -45,8 +45,6 @@ RUN apt-get update \
       iputils-ping \
       pdftk \
       curl \
-      libcurl4 \
-      libcurl4-openssl-dev \
       net-tools \
       telnet \
       mysql-client \
