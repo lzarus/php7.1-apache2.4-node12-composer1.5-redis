@@ -57,11 +57,20 @@ RUN apt-get update \
       linux-libc-dev \
       libyaml-dev \
       bash-completion \
-      redis-server \
       dos2unix \
       libssl-dev \
-      cron \
-      redis-server 
+      cron 
+
+#Install redis
+RUN  wget http://download.redis.io/releases/redis-6.0.16.tar.gz \
+      && tar xzf redis-6.0.16.tar.gz \
+      && cd redis-6.0.16 \
+      && make \
+      &&  apt-get install tcl8.5 -y --force-yes \
+      # optionally run "make test" to check everything is ok
+      && make install \
+      && cd utils \
+      && yes '' | ./install_server.sh
 
 # Install memcached for PHP 7
 RUN cd /tmp && git clone https://github.com/php-memcached-dev/php-memcached.git \
@@ -128,7 +137,7 @@ COPY config/apache2.conf /etc/apache2
 COPY core/envvars /etc/apache2
 COPY core/other-vhosts-access-log.conf /etc/apache2/conf-enabled/
 RUN rm /etc/apache2/sites-enabled/000-default.conf && touch /var/log/cron.log \
-      && a2enmod rewrite expires headers && service apache2 restart && service redis-server start \
+      && a2enmod rewrite expires headers && service apache2 restart \
       # Set timezone to Europe/Paris
       && echo "Europe/Paris" > /etc/timezone && dpkg-reconfigure -f noninteractive tzdata \
       #configuser
