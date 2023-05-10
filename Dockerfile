@@ -137,7 +137,7 @@ COPY config/apache2.conf /etc/apache2
 COPY core/envvars /etc/apache2
 COPY core/other-vhosts-access-log.conf /etc/apache2/conf-enabled/
 RUN rm /etc/apache2/sites-enabled/000-default.conf && touch /var/log/cron.log \
-      && a2enmod rewrite expires headers && service apache2 restart && service redis_6379 start \
+      && a2enmod rewrite expires headers && service apache2 restart \
       # Set timezone to Europe/Paris
       && echo "Europe/Paris" > /etc/timezone && dpkg-reconfigure -f noninteractive tzdata \
       #configuser
