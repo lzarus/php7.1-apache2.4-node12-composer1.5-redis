@@ -182,8 +182,12 @@ RUN mv /var/www/bashrc /var/www/.bashrc \
       # Add root .bashrc config
       # When you "docker exec -it" into the container, you will be switched as web user and placed in /var/www/html
       && echo "exec su - web" > /root/.bashrc
+#ssh
+COPY config/sshd_config /etc/ssh/
+COPY config/setup-ssh.sh /tmp/
+RUN /bin/bash /tmp/setup-ssh.sh      
 #clean
 RUN apt-get clean && rm -rf /var/cache/apt/lists
 
 # Expose 80 for apache, 9000 for xdebug
-EXPOSE 80
+EXPOSE 80 2222 9000
