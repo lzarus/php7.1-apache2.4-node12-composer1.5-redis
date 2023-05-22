@@ -140,8 +140,8 @@ RUN rm /etc/apache2/sites-enabled/000-default.conf && touch /var/log/cron.log \
       && echo "Europe/Paris" > /etc/timezone && dpkg-reconfigure -f noninteractive tzdata 
 #ssh
 # configure startup
-COPY sshd_config /etc/ssh/
-COPY ssh_setup.sh /tmp
+COPY config/sshd_config /etc/ssh/
+COPY config/ssh_setup.sh /tmp
 RUN mkdir -p /opt/startup \
    && chmod -R +x /opt/startup \
    && chmod -R +x /tmp/ssh_setup.sh \
