@@ -1,4 +1,4 @@
-name: ci
+name: ci-oryx
 
 on:
   push:
@@ -28,4 +28,4 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/php7.1-apache2.4-node12-composer1.5-redis-oryx:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/php7.1-apache2.4-node12-composer1.5-oryx:latest

@@ -61,6 +61,7 @@ sed -i "s/APACHE_MAX_REQ_WORKERS/$APACHE_MAX_REQ_WORKERS/g" /etc/apache2/mods-av
 
 # starting sshd process
 source /opt/startup/startssh.sh
+service cron start
 
 appPath="/home/site/wwwroot"
 runFromPath="/tmp/webapp"
