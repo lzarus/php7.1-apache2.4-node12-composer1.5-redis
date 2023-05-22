@@ -183,9 +183,9 @@ RUN mv /var/www/bashrc /var/www/.bashrc \
       # When you "docker exec -it" into the container, you will be switched as web user and placed in /var/www/html
       && echo "exec su - web" > /root/.bashrc
 #ssh
-COPY config/sshd_config /etc/ssh/ \
-      && COPY config/setup-ssh.sh /tmp/ \
-      && RUN /bin/bash /tmp/setup-ssh.sh \
+COPY config/sshd_config /etc/ssh/ 
+COPY config/setup-ssh.sh /tmp/ 
+RUN /bin/bash /tmp/setup-ssh.sh \
       &&  && service ssh restart \    
 #clean
 RUN apt-get clean && rm -rf /var/cache/apt/lists
