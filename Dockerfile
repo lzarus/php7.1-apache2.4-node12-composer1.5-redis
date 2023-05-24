@@ -103,11 +103,6 @@ RUN chmod 755 /usr/bin/tcpping
 COPY init_container.sh /bin/
 COPY hostingstart.html /home/site/wwwroot/hostingstart.html
 
-RUN if [[ "$PHP_VERSION" == "5.6" || "$PHP_VERSION" == "7.0" ]] ; then \
-        apt-get install -y libmcrypt-dev \
-        && docker-php-ext-install mcrypt; \
-    fi
-
 RUN chmod 755 /bin/init_container.sh \
     && mkdir -p /home/LogFiles/ \
     && echo "root:Docker!" | chpasswd \
@@ -168,10 +163,11 @@ RUN rm -f /usr/local/etc/php/conf.d/php.ini \
                 echo 'date.timezone=UTC'; \
     } > /usr/local/etc/php/conf.d/php.ini
 
-RUN rm -f /etc/apache2/conf-enabled/other-vhosts-access-log.conf
-RUN rm /etc/apache2/sites-enabled/000-default.conf
+RUN rm -f /etc/apache2/conf-enabled/other-vhosts-access-log.conf \
+      && rm /etc/apache2/sites-enabled/000-default.conf
 
 COPY mpm_prefork.conf /etc/apache2/mods-available/mpm_prefork.conf
+RUN a2enmod rewrite
 
 WORKDIR /home/site/wwwroot
 
