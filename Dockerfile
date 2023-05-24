@@ -122,9 +122,6 @@ RUN mkdir -p /opt/startup \
    && (sleep 1;/tmp/ssh_setup.sh 2>&1 > /dev/null) \
    && rm -rf /tmp/*
 
-COPY startssh.sh /opt/startup
-RUN chmod +x /opt/startup/startssh.sh
-
 ENV PORT 8080
 ENV SSH_PORT 2222
 EXPOSE 2222 8080
