@@ -4,7 +4,8 @@ LABEL maintainer="Update by Hasiniaina Andriatsiory <hasiniaina.andriatsiory@gma
 
 ENV PHP_VERSION 7.1.3
 COPY sources.list /etc/apt/
-RUN apt-key adv --keyserver pgp.mit.edu --recv-keys 3A79BD29
+COPY mysql.gpg.asc /etc/apt/
+RUN apt-key add /etc/apt/mysql.gpg.asc
 RUN apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com AA8E81B4331F7F50 \
       && echo "Acquire::Check-Valid-Until "false";" >> /etc/apt/apt.conf \
       && apt-get update
