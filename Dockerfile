@@ -65,6 +65,17 @@ RUN docker-php-ext-install -j "$(nproc)" \
       tokenizer \
       xsl \
       zip 
+
+# Opcode cache
+RUN ( \
+      echo "opcache.memory_consumption=128"; \
+      echo "opcache.interned_strings_buffer=8"; \
+      echo "opcache.max_accelerated_files=20000"; \
+      echo "opcache.revalidate_freq=5"; \
+      echo "opcache.fast_shutdown=1"; \
+      echo "opcache.enable_cli=1"; \
+      ) > /usr/local/etc/php/conf.d/opcache-recommended.ini
+
 #Pecl
 RUN pecl install memcached redis apcu \
       && docker-php-ext-enable redis && docker-php-ext-enable memcached && docker-php-ext-enable apcu
@@ -120,11 +131,13 @@ RUN rm -f /usr/local/etc/php/conf.d/php.ini \
                 echo 'date.timezone=Europe/Paris'; \
     } > /usr/local/etc/php/conf.d/php.ini
 
+COPY core/apache2.conf /etc/apache2
+COPY core/envvars /etc/apache2
 RUN rm -f /etc/apache2/conf-enabled/other-vhosts-access-log.conf \
-      && rm /etc/apache2/sites-enabled/000-default.conf
-
-COPY mpm_prefork.conf /etc/apache2/mods-available/mpm_prefork.conf
-RUN a2enmod rewrite
+      && rm /etc/apache2/sites-enabled/000-default.conf \
+    && rm /etc/apache2/sites-enabled/000-default.conf && touch /var/log/cron.log \
+    && a2enmod rewrite expires headers && service apache2 restart \
+    && echo "syntax on\ncolorscheme desert"  > ~/.vimrc 
 
 WORKDIR /home/site/wwwroot
 
