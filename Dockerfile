@@ -17,9 +17,6 @@ RUN apt-get update \
       cron \
       dnsutils \
       git \
-      libcurl3-dev \
-      libwebp-dev \
-      libxpm-dev \
       libfreetype6-dev \
       libjpeg-dev \
       libpng-dev \
@@ -28,8 +25,6 @@ RUN apt-get update \
       libmcrypt-dev \
       libldb-dev \
       libicu-dev \
-      libgmp-dev \
-      imagemagick \
       libpspell-dev \
       libbz2-dev \
       libxml2-dev \
@@ -40,10 +35,8 @@ RUN apt-get update \
       libmemcached-tools \
       libxslt1-dev \
       linux-libc-dev \
-      libyaml-dev \
       libssl-dev \
       iputils-ping \
-      iproute2 \
       memcached \
       nano  \
       net-tools \
@@ -53,20 +46,16 @@ RUN apt-get update \
       tcpdump \
       tcptraceroute \
       telnet \
-      unzip \
       vim \
       wget \
       zlib1g-dev \
       zip 
-
-# Install memcached for PHP 7
-RUN cd /tmp && git clone https://github.com/php-memcached-dev/php-memcached.git \
-      && cd /tmp/php-memcached && sudo git checkout php7 && phpize && ./configure --disable-memcached-sasl && make -j$(nproc) && make install
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr/local --with-jpeg-dir=/usr/local --with-webp-dir=/usr/local
 RUN docker-php-ext-install -j "$(nproc)" \
       bcmath  \
       bz2 \
       calendar \
+      curl \
       exif \
       ftp \
       gettext \
