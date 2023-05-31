@@ -16,31 +16,18 @@ RUN apt-get update \
       apt-utils \
       curl \
       cron \
-      dnsutils \
       git \
       libcurl3-dev \
       libwebp-dev \
-      libxpm-dev \
       libfreetype6-dev \
       libjpeg-dev \
       libpng-dev \
       libjpeg62-turbo-dev \
-      libpq-dev \
       libmcrypt-dev \
-      libldb-dev \
-      libicu-dev \
-      libgmp-dev \
-      imagemagick \
-      libpspell-dev \
-      libbz2-dev \
-      libxml2-dev \
       libz-dev \
       libzip-dev \
       libmemcached-dev \
-      libreadline-dev \
-      libmemcached-tools \
       libxslt1-dev \
-      linux-libc-dev \
       libyaml-dev \
       libssl-dev \
       iputils-ping \
@@ -49,17 +36,11 @@ RUN apt-get update \
       nano  \
       net-tools \
       openssh-server \
-      pdftk \
       sudo \
-      telnet \
       vim \
       wget \
-      zlib1g-dev \
       zip 
 
-# Install memcached for PHP 7
-RUN cd /tmp && git clone https://github.com/php-memcached-dev/php-memcached.git \
-      && cd /tmp/php-memcached && sudo git checkout php7 && phpize && ./configure --disable-memcached-sasl && make -j$(nproc) && make install
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr/local --with-jpeg-dir=/usr/local --with-webp-dir=/usr/local
 RUN docker-php-ext-install -j "$(nproc)" \
       bcmath  \
@@ -85,9 +66,9 @@ RUN docker-php-ext-install -j "$(nproc)" \
       xsl \
       zip 
 #Pecl
-RUN pecl install memcached redis && pecl install apcu-5.1.8 \
-      && docker-php-ext-enable redis && docker-php-ext-enable memcached
-
+RUN pecl install memcached redis apcu \
+      && docker-php-ext-enable redis && docker-php-ext-enable memcached && docker-php-ext-enable apcu
+      
 # Installation node.js
 RUN curl -s https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add - \
       && echo "deb https://deb.nodesource.com/node_12.x jessie main" > /etc/apt/sources.list.d/nodesource.list && echo "deb-src https://deb.nodesource.com/node_12.x jessie main" >> /etc/apt/sources.list.d/nodesource.list  \
@@ -129,27 +110,6 @@ COPY sshd_config /etc/ssh/
 ENV WEBSITE_ROLE_INSTANCE_ID localRoleInstance
 ENV WEBSITE_INSTANCE_ID localInstance
 ENV PATH ${PATH}:/home/site/wwwroot
-
-RUN sed -i 's!ErrorLog ${APACHE_LOG_DIR}/error.log!ErrorLog /dev/stderr!g' /etc/apache2/apache2.conf
-RUN sed -i 's!User ${APACHE_RUN_USER}!User www-data!g' /etc/apache2/apache2.conf
-RUN sed -i 's!User ${APACHE_RUN_GROUP}!Group www-data!g' /etc/apache2/apache2.conf
-RUN { \
-   echo 'DocumentRoot /home/site/wwwroot'; \
-   echo 'DirectoryIndex default.htm default.html index.htm index.html index.php hostingstart.html'; \
-   echo 'CustomLog /dev/null combined'; \
-   echo '<FilesMatch "\.(?i:ph([[p]?[0-9]*|tm[l]?))$">'; \
-   echo '   SetHandler application/x-httpd-php'; \
-   echo '</FilesMatch>'; \
-   echo '<DirectoryMatch "^/.*/\.git/">'; \
-   echo '   Order deny,allow'; \
-   echo '   Deny from all'; \
-   echo '</DirectoryMatch>'; \
-   echo 'EnableMMAP Off'; \
-   echo 'HostnameLookups Off'; \
-   echo 'EnableSendfile Off'; \
-   echo 'ServerSignature Off'; \
-   echo 'ServerTokens Prod'; \
-} >> /etc/apache2/apache2.conf
 
 RUN rm -f /usr/local/etc/php/conf.d/php.ini \
    && { \
