@@ -4,6 +4,7 @@ LABEL maintainer="Update by Hasiniaina Andriatsiory <hasiniaina.andriatsiory@gma
 
 ENV PHP_VERSION 7.1.3
 COPY sources.list /etc/apt/
+RUN apt-key adv --keyserver pgp.mit.edu --recv-keys 3A79BD29
 RUN apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com AA8E81B4331F7F50 \
       && echo "Acquire::Check-Valid-Until "false";" >> /etc/apt/apt.conf \
       && apt-get update
@@ -43,7 +44,6 @@ RUN apt-get update \
       libssl-dev \
       iputils-ping \
       iproute2 \
-      mysql-client \
       memcached \
       nano  \
       net-tools \
@@ -58,6 +58,8 @@ RUN apt-get update \
       wget \
       zlib1g-dev \
       zip 
+
+RUN apt-key add 
 
 # Install memcached for PHP 7
 RUN cd /tmp && git clone https://github.com/php-memcached-dev/php-memcached.git \
