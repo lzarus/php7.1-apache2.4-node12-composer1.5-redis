@@ -150,7 +150,6 @@ RUN rm -f /usr/local/etc/php/conf.d/php.ini \
 COPY core/apache2.conf /etc/apache2
 COPY core/envvars /etc/apache2
 RUN rm -f /etc/apache2/conf-enabled/other-vhosts-access-log.conf \
-      && rm /etc/apache2/sites-enabled/000-default.conf \
     && rm /etc/apache2/sites-enabled/000-default.conf && touch /var/log/cron.log \
     && a2enmod rewrite expires headers && service apache2 restart \
     && echo "syntax on\ncolorscheme desert"  > ~/.vimrc 
