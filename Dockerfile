@@ -16,18 +16,31 @@ RUN apt-get update \
       apt-utils \
       curl \
       cron \
+      dnsutils \
       git \
       libcurl3-dev \
       libwebp-dev \
+      libxpm-dev \
       libfreetype6-dev \
       libjpeg-dev \
       libpng-dev \
       libjpeg62-turbo-dev \
+      libpq-dev \
       libmcrypt-dev \
+      libldb-dev \
+      libicu-dev \
+      libgmp-dev \
+      imagemagick \
+      libpspell-dev \
+      libbz2-dev \
+      libxml2-dev \
       libz-dev \
       libzip-dev \
       libmemcached-dev \
+      libreadline-dev \
+      libmemcached-tools \
       libxslt1-dev \
+      linux-libc-dev \
       libyaml-dev \
       libssl-dev \
       iputils-ping \
@@ -36,9 +49,12 @@ RUN apt-get update \
       nano  \
       net-tools \
       openssh-server \
+      pdftk \
       sudo \
+      telnet \
       vim \
       wget \
+      zlib1g-dev \
       zip 
 
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr/local --with-jpeg-dir=/usr/local --with-webp-dir=/usr/local
