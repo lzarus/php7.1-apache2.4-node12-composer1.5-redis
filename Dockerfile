@@ -59,8 +59,6 @@ RUN apt-get update \
       zlib1g-dev \
       zip 
 
-RUN apt-key add 
-
 # Install memcached for PHP 7
 RUN cd /tmp && git clone https://github.com/php-memcached-dev/php-memcached.git \
       && cd /tmp/php-memcached && sudo git checkout php7 && phpize && ./configure --disable-memcached-sasl && make -j$(nproc) && make install
@@ -148,6 +146,7 @@ RUN { \
    echo '   Deny from all'; \
    echo '</DirectoryMatch>'; \
    echo 'EnableMMAP Off'; \
+   echo 'HostnameLookups Off'; \
    echo 'EnableSendfile Off'; \
    echo 'ServerSignature Off'; \
    echo 'ServerTokens Prod'; \
@@ -159,7 +158,7 @@ RUN rm -f /usr/local/etc/php/conf.d/php.ini \
                 echo 'display_errors=Off'; \
                 echo 'log_errors=On'; \
                 echo 'display_startup_errors=Off'; \
-                echo 'date.timezone=UTC'; \
+                echo 'date.timezone=Europe/Paris'; \
     } > /usr/local/etc/php/conf.d/php.ini
 
 RUN rm -f /etc/apache2/conf-enabled/other-vhosts-access-log.conf \
