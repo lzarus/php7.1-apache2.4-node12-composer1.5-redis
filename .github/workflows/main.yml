@@ -3,7 +3,7 @@ name: ci-oryx-7.1
 on:
   push:
     branches:
-      - "oryx-7.1"
+      - "oryx-php7.1"
 
 jobs:
   build:
