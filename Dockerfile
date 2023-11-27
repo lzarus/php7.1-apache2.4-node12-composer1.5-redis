@@ -1,5 +1,5 @@
 
-FROM php:7.1.3-apache
+FROM php:7.4-apache
 LABEL maintainer="Update by Hasiniaina Andriatsiory <hasiniaina.andriatsiory@gmail.com>"
 
 ENV PHP_VERSION 7.1.3
@@ -44,10 +44,8 @@ RUN apt-get update \
       libyaml-dev \
       libssl-dev \
       iputils-ping \
-      iproute2 \
       memcached \
       nano  \
-      net-tools \
       openssh-server \
       pdftk \
       sudo \
@@ -102,7 +100,7 @@ RUN curl -s https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add -
       && apt update -y && apt install nodejs -y --force-yes && npm install -g yarn
 
 #composer
-RUN  curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --version=1.5.0 --filename=composer
+RUN  curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 COPY tcpping /usr/bin/tcpping
 RUN chmod 755 /usr/bin/tcpping

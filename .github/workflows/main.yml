@@ -3,7 +3,7 @@ name: ci-oryx-7.1
 on:
   push:
     branches:
-      - "oryx-php7.1"
+      - "oryx-php7.4"
 
 jobs:
   build:
@@ -28,4 +28,4 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/php7.1-apache-node12-composer1.5-oryx:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/php7.4-apache-node12-composer1.5-oryx:latest
