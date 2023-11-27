@@ -2,7 +2,7 @@
 FROM php:7.4-apache
 LABEL maintainer="Update by Hasiniaina Andriatsiory <hasiniaina.andriatsiory@gmail.com>"
 
-ENV PHP_VERSION 7.1.3
+ENV PHP_VERSION 7.4
 COPY sources.list /etc/apt/
 COPY mysql.gpg.asc /etc/apt/
 RUN apt-key add /etc/apt/mysql.gpg.asc
