@@ -1,15 +1,7 @@
-
-FROM php:7.4-apache
+FROM mcr.microsoft.com/oryx/php:7.4-20220825.1
 LABEL maintainer="Update by Hasiniaina Andriatsiory <hasiniaina.andriatsiory@gmail.com>"
 
 ENV PHP_VERSION 7.4
-COPY sources.list /etc/apt/
-COPY mysql.gpg.asc /etc/apt/
-RUN apt-key add /etc/apt/mysql.gpg.asc
-RUN apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com AA8E81B4331F7F50 \
-      && echo "Acquire::Check-Valid-Until "false";" >> /etc/apt/apt.conf \
-      && apt-get update
-
 RUN apt-get update \
       && apt-get install --force-yes -y --no-install-recommends \
       lsb-release ca-certificates apt-transport-https software-properties-common build-essential \
@@ -50,6 +42,7 @@ RUN apt-get update \
       pdftk \
       sudo \
       telnet \
+      tcptraceroute \
       vim \
       wget \
       zlib1g-dev \
@@ -96,7 +89,7 @@ RUN pecl install memcached redis apcu \
       
 # Installation node.js
 RUN curl -s https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add - \
-      && echo "deb https://deb.nodesource.com/node_12.x jessie main" > /etc/apt/sources.list.d/nodesource.list && echo "deb-src https://deb.nodesource.com/node_12.x jessie main" >> /etc/apt/sources.list.d/nodesource.list  \
+      && echo "deb https://deb.nodesource.com/node_16.x jessie main" > /etc/apt/sources.list.d/nodesource.list && echo "deb-src https://deb.nodesource.com/node_16.x jessie main" >> /etc/apt/sources.list.d/nodesource.list  \
       && apt update -y && apt install nodejs -y --force-yes && npm install -g yarn
 
 #composer
