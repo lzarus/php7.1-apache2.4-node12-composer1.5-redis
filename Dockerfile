@@ -11,32 +11,6 @@ RUN apt-get update \
       cron \
       dnsutils \
       git \
-      gnupg \
-      libcurl3-dev \
-      libwebp-dev \
-      libxpm-dev \
-      libfreetype6-dev \
-      libjpeg-dev \
-      libpng-dev \
-      libjpeg62-turbo-dev \
-      libpq-dev \
-      libmcrypt-dev \
-      libldb-dev \
-      libicu-dev \
-      libgmp-dev \
-      imagemagick \
-      libpspell-dev \
-      libbz2-dev \
-      libxml2-dev \
-      libz-dev \
-      libzip-dev \
-      libmemcached-dev \
-      libreadline-dev \
-      libmemcached-tools \
-      libxslt1-dev \
-      linux-libc-dev \
-      libyaml-dev \
-      libssl-dev \
       iputils-ping \
       memcached \
       nano  \
@@ -50,8 +24,7 @@ RUN apt-get update \
       zlib1g-dev \
       zip 
 
-RUN docker-php-ext-configure gd --with-freetype-dir=/usr/local --with-jpeg-dir=/usr/local --with-webp-dir=/usr/local
-RUN docker-php-ext-install -j "$(nproc)" curl
+RUN docker-php-ext-install -j "$(nproc)" curl opcache
 
 # Opcode cache
 RUN ( \
@@ -68,12 +41,10 @@ RUN pecl install memcached redis apcu \
       && docker-php-ext-enable redis && docker-php-ext-enable memcached && docker-php-ext-enable apcu
       
 # Installation node.js
-RUN curl -sL https://deb.nodesource.com/setup_18.x | bash -
-RUN apt install nodejs -y && npm install -g yarn
-
-
+RUN curl -sL https://deb.nodesource.com/setup_18.x | bash -\
+	&& apt install nodejs -y && npm install -g yarn \
 #composer
-RUN  curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+ 	&&  curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 COPY tcpping /usr/bin/tcpping
 RUN chmod 755 /usr/bin/tcpping
