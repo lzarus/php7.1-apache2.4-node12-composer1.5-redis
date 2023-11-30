@@ -54,11 +54,9 @@ RUN docker-php-ext-install -j "$(nproc)" \
       bz2 \
       calendar \
       curl \
-      exif \
       ftp \
       gettext \
       gd \
-      intl \
       mysqli \
       mcrypt \
       opcache \
@@ -70,7 +68,6 @@ RUN docker-php-ext-install -j "$(nproc)" \
       sysvsem \
       sysvshm \
       tokenizer \
-      xsl \
       zip 
 
 # Opcode cache
