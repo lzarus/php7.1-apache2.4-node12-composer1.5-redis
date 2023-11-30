@@ -53,7 +53,6 @@ RUN docker-php-ext-install -j "$(nproc)" \
       calendar \
       curl \
       gettext \
-      gd \
       mcrypt 
 
 # Opcode cache
