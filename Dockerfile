@@ -49,8 +49,7 @@ RUN apt-get update \
       zip 
 
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr/local --with-jpeg-dir=/usr/local --with-webp-dir=/usr/local
-RUN docker-php-ext-install -j "$(nproc)" \
-      mcrypt 
+RUN docker-php-ext-install -j "$(nproc)" curl
 
 # Opcode cache
 RUN ( \
