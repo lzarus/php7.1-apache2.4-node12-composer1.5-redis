@@ -12,6 +12,9 @@ RUN apt-get update \
       dnsutils \
       git \
       iputils-ping \
+      libmemcached-dev \
+      libreadline-dev \
+      libmemcached-tools \
       memcached \
       nano  \
       openssh-server \
