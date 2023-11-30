@@ -68,8 +68,7 @@ RUN pecl install memcached redis apcu \
       && docker-php-ext-enable redis && docker-php-ext-enable memcached && docker-php-ext-enable apcu
       
 # Installation node.js
-RUN curl -fsSL https://deb.nodesource.com/setup_18.x | - \
-	&& apt update -y && apt install nodejs -y --force-yes && npm install -g yarn
+RUN apt install nodejs -y --force-yes && npm install -g yarn
 
 
 #composer
