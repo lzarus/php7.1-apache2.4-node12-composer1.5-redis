@@ -56,15 +56,11 @@ RUN docker-php-ext-install -j "$(nproc)" \
       #ftp \
       gettext \
       gd \
-      #mysqli \
+      mysqli \
       mcrypt \
       opcache \
       #phar \
-      pdo_mysql \
-      soap \
-      sockets \
-      tokenizer \
-      zip 
+      pdo_mysql 
 
 # Opcode cache
 RUN ( \
