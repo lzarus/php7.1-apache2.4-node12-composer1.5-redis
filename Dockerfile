@@ -1,5 +1,5 @@
 # Pull base image.
-FROM php:7.1.3-apache
+FROM php:7.4.33-apache
 LABEL maintainer="Update by Hasiniaina Andriatsiory <hasiniaina.andriatsiory@gmail.com>"
 LABEL description="This image docker contains : php7.1.3, composer1.5, apache2.4, mysqlclient, redis-server, cron and more extensions php."
 
